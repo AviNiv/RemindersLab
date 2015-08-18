@@ -23,11 +23,28 @@
             android:id="@+id/row_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Reminder Text"
+            android:textColor="@color/white"
             android:textSize="18sp"
-            android:background="@color/white"/>
+            android:background="@color/black"/>
 
     </LinearLayout>
+    
+    <view
+        class="android.view.View"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
+    <view
+        class="android.view.View"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray20"/>
 
 </LinearLayout>
