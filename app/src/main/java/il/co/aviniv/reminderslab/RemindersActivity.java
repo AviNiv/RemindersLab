@@ -2,13 +2,15 @@ package il.co.aviniv.reminderslab;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-public class RemindersActivity extends ActionBarActivity {
+public class RemindersActivity extends AppCompatActivity {
 
     private ListView mListView;
 
@@ -35,7 +37,7 @@ public class RemindersActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        /*// Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -45,6 +47,18 @@ public class RemindersActivity extends ActionBarActivity {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);*/
+
+        switch (item.getItemId()) {
+            case R.id.action_new:
+                //create new reminder
+                Log.d(getLocalClassName(), "create new reminder");
+                return true;
+            case R.id.action_exit:
+                finish();
+                return true;
+            default:
+                return false;
+        }
     }
 }
