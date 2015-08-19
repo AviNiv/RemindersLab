@@ -34,7 +34,7 @@ public class RemindersSimpleCursorAdapter extends SimpleCursorAdapter {
         }
 
         if (cursor.getInt(holder.colImp) > 0) {
-            holder.listTab.setBackgroundColor(context.getResources().getColor(R.color.orange));
+            holder.listTab.setBackgroundColor(context.getResources().getColor(R.color.orange2));
         } else {
             holder.listTab.setBackgroundColor(context.getResources().getColor(R.color.green));
         }
