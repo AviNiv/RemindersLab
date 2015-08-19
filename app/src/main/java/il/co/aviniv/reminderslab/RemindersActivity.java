@@ -22,35 +22,45 @@ public class RemindersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
 
-        mListView = (ListView)findViewById(R.id.reminders_list_view);
-        mListView.setDivider(null);
+        try {
+            mListView = (ListView) findViewById(R.id.reminders_list_view);
+            mListView.setDivider(null);
 
-        mDbAdapter = new RemindersDbAdapter(this);
-        mDbAdapter.open();
+            mDbAdapter = new RemindersDbAdapter(this);
+            mDbAdapter.open();
 
-        Cursor cursor = mDbAdapter.fetchAllReminders();
+            //fill sample data if new instance
+            if (savedInstanceState == null) {
+                addSampleData(mDbAdapter);
+            }
 
-        //from columns defined in the db
-        String[] from = new String[]{RemindersDbAdapter.COL_CONTENT};
-        //to the ids of views in the layout
-        int[] to = new int[]{R.id.row_text};
+            Cursor cursor = mDbAdapter.fetchAllReminders();
 
-        mCursorAdapter = new RemindersSimpleCursorAdapter(RemindersActivity.this, R.layout.reminders_row, cursor, from, to, 0);
-        //( context , the layout of the row , cursor , from columns defined in the db , to the ids of views in the layout , flag - not used );
+            //from columns defined in the db
+            String[] from = new String[]{RemindersDbAdapter.COL_CONTENT};
+            //to the ids of views in the layout
+            int[] to = new int[]{R.id.row_text};
 
-        //the cursorAdapter (controller) is now updating the listView (view) with data from the db (model)
-        mListView.setAdapter(mCursorAdapter);
+            mCursorAdapter = new RemindersSimpleCursorAdapter(RemindersActivity.this, R.layout.reminders_row, cursor, from, to, 0);
+            //( context , the layout of the row , cursor , from columns defined in the db , to the ids of views in the layout , flag - not used );
+
+            //the cursorAdapter (controller) is now updating the listView (view) with data from the db (model)
+            mListView.setAdapter(mCursorAdapter);
 
 
-        //this script if for static list, replaced by the above dynamic list
-        /*
-        //The arrayAdatper is the controller in our model-view-controller relationship. (controller)
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this, R.layout.reminders_row, R.id.row_text, new String[]{"first record", "second record", "third record"});
-                //(context, layout (view), row (view), data (model) with bogus data to test our listview);
-        mListView.setAdapter(arrayAdapter);
-        //Remainder of the class listing omitted for brevity
-        */
+                //this script if for static list, replaced by the above dynamic list
+            /*------------------------------------------------------------------------------------------------//
+            //The arrayAdatper is the controller in our model-view-controller relationship. (controller)
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    this, R.layout.reminders_row, R.id.row_text, new String[]{"first record", "second record", "third record"});
+                    //(context, layout (view), row (view), data (model) with bogus data to test our listview);
+            mListView.setAdapter(arrayAdapter);
+            //------------------------------------------------------------------------------------------------*/
+
+        }
+        catch (Exception ex) {
+            Utilities.showException(this, ex);
+        }
     }
 
     @Override
@@ -84,6 +94,41 @@ public class RemindersActivity extends AppCompatActivity {
                 return true;
             default:
                 return false;
+        }
+    }
+
+    private void addSampleData(RemindersDbAdapter mDbAdapter) {
+        try {
+            //Clear all data
+            mDbAdapter.deleteAllReminders();
+            //Add some data
+            insertSomeReminders(mDbAdapter);
+        }
+        catch (Exception ex) {
+            Utilities.showException(this, ex);
+        }
+    }
+
+    private void insertSomeReminders(RemindersDbAdapter mDbAdapter) {
+        try {
+            mDbAdapter.createReminder("Buy Learn Android Studio", true);
+            mDbAdapter.createReminder("Send Dad birthday gift", false);
+            mDbAdapter.createReminder("Dinner at the Gage on Friday", false);
+            mDbAdapter.createReminder("String squash racket", false);
+            mDbAdapter.createReminder("Shovel and salt walkways", false);
+            mDbAdapter.createReminder("Prepare Advanced Android syllabus", true);
+            mDbAdapter.createReminder("Buy new office chair", false);
+            mDbAdapter.createReminder("Call Auto-body shop for quote", false);
+            mDbAdapter.createReminder("Renew membership to club", false);
+            mDbAdapter.createReminder("Buy new Galaxy Android phone", true);
+            mDbAdapter.createReminder("Sell old Android phone - auction", false);
+            mDbAdapter.createReminder("Buy new paddles for kayaks", false);
+            mDbAdapter.createReminder("Call accountant about tax returns", false);
+            mDbAdapter.createReminder("Buy 300,000 shares of Google", false);
+            mDbAdapter.createReminder("Call the Dalai Lama back", true);
+        }
+        catch (Exception ex) {
+            Utilities.showException(this, ex);
         }
     }
 }

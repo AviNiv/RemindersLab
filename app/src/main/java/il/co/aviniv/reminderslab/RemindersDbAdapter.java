@@ -40,7 +40,7 @@ public class RemindersDbAdapter {
     //SQL statement used to create the database
     private static final String DATABASE_CREATE = "CREATE TABLE if not exists " + TABLE_NAME
             + " ( " + COL_ID + " INTEGER PRIMARY KEY autoincrement"
-            + ", " + COL_CONTENT + "TEXT"
+            + ", " + COL_CONTENT + " TEXT"
             + ", " + COL_IMPORTANT + " INTEGER"
             + " );";
 
@@ -125,14 +125,23 @@ public class RemindersDbAdapter {
     //--------//--------//--------//--------//--------//
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
+
+        Context mCxt;
+
         DatabaseHelper(Context context) {
             super (context, DATABASE_NAME, null, DATABASE_VERSION);
+            mCxt = context;
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            Log.w(TAG, DATABASE_CREATE);
-            db.execSQL(DATABASE_CREATE);
+            try {
+                Log.w(TAG, DATABASE_CREATE);
+                db.execSQL(DATABASE_CREATE);
+            }
+            catch (Exception ex) {
+                Utilities.showException(mCxt, ex);
+            }
         }
 
         @Override
