@@ -7,4 +7,6 @@
     <color name="gray20">#333333</color>
     <color name="orange">#FFA500</color>
     <color name="orange2">#FF381A</color>
+    <color name="light_grey">#BABABA</color>
+    <color name="blue">#1118FF</color>
 </resources>

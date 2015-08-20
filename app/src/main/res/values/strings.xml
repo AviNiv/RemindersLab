@@ -6,4 +6,8 @@
     <string name="exit">Exit</string>
     <string name="new_reminder">New Reminder</string>
     <string name="delete">delete</string>
+    <string name="new_reminder_label">New Reminder:</string>
+    <string name="important">Important</string>
+    <string name="cancel">Cancel</string>
+    <string name="commit">Commit</string>
 </resources>

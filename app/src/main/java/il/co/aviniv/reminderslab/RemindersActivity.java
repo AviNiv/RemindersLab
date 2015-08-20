@@ -142,7 +142,6 @@ public class RemindersActivity extends AppCompatActivity {
                     @TargetApi(Build.VERSION_CODES.HONEYCOMB)   //added by the android studio
                     @Override
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item)  {
-                        Log.d("ANIV", String.valueOf(item.getItemId()));
                         try {
                             //select or deselect each item in context menu
                             switch (item.getItemId()) {
