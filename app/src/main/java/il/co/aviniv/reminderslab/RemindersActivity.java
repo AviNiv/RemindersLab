@@ -121,8 +121,8 @@ public class RemindersActivity extends AppCompatActivity {
                     @Override
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                         MenuInflater inflater = mode.getMenuInflater();
-                        inflater.inflate(R.menu.cam_menu, menu);
-                        return true;
+                        inflater.inflate(R.menu.cam_menu, menu);                //inflate a context menu in the action bar
+                        return true;                                            //true = enter multi select action mode
                     }
 
                     @Override
@@ -130,8 +130,10 @@ public class RemindersActivity extends AppCompatActivity {
                         return false;
                     }
 
+                    @TargetApi(Build.VERSION_CODES.HONEYCOMB)   //added by the android studio
                     @Override
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                        //select or deselect each item in context menu
                         switch(item.getItemId()) {
                             case R.id.menu_item_delete_reminder:
                                 for (int nC = mCursorAdapter.getCount() - 1; nC >= 0; nC--) {
@@ -139,9 +141,9 @@ public class RemindersActivity extends AppCompatActivity {
                                         mDbAdapter.deleteReminderById(getIdFromPosition(nC));
                                     }
                                 }
-                                mode.finish();
+                                mode.finish();  //end multi select mode
                                 mCursorAdapter.changeCursor(mDbAdapter.fetchAllReminders());
-                                return true;
+                                return true;        // true = the action has been properly handled
                         }
                         return false;
                     }
