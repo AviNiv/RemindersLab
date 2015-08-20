@@ -1,14 +1,19 @@
 package il.co.aviniv.reminderslab;
 
+import android.app.Dialog;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class RemindersActivity extends AppCompatActivity {
@@ -48,7 +53,7 @@ public class RemindersActivity extends AppCompatActivity {
             mListView.setAdapter(mCursorAdapter);
 
 
-                //this script if for static list, replaced by the above dynamic list
+            //this script if for static list, replaced by the above dynamic list
             /*------------------------------------------------------------------------------------------------//
             //The arrayAdatper is the controller in our model-view-controller relationship. (controller)
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
@@ -57,6 +62,46 @@ public class RemindersActivity extends AppCompatActivity {
             mListView.setAdapter(arrayAdapter);
             //------------------------------------------------------------------------------------------------*/
 
+
+            //when we click an individual item in the listview
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int masterListPosition, long id){
+                    //create a dialog which contains 2 views (edit, delete)
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RemindersActivity.this);
+                    ListView modeListView = new ListView(RemindersActivity.this);
+                    String[] modes = new String[] { "Edit Reminder", "Delete Reminder" };
+                    //create an inner view for each option to select (edit, delete)
+                    ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
+                            RemindersActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, modes);
+                    modeListView.setAdapter(modeAdapter);
+                    builder.setView(modeListView);
+                    final Dialog dialog = builder.create();
+                    dialog.show();
+
+                    //create an onclick listener to the inner view (modeListView), to handle selected option action
+                    modeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //edit reminder
+                            if (position == 0) {
+                                Toast.makeText(RemindersActivity.this, "edit " + masterListPosition, Toast.LENGTH_SHORT).show();
+                            }
+                            //delete reminder
+                            else {
+                                Toast.makeText(RemindersActivity.this, "delete " + masterListPosition, Toast.LENGTH_SHORT).show();
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+                };
+
+                //this script if for testing the position
+                /*@Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(RemindersActivity.this, "clicked " + position, Toast.LENGTH_SHORT).show();
+                }*/
+            });
         }
         catch (Exception ex) {
             Utilities.showException(this, ex);
