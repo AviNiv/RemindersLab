@@ -10,4 +10,5 @@
     <string name="important">Important</string>
     <string name="cancel">Cancel</string>
     <string name="commit">Commit</string>
+    <string name="edit_reminder">Edit Reminder</string>
 </resources>
