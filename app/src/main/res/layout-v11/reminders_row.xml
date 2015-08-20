@@ -10,8 +10,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="?android:attr/activatedBackgroundIndicator">
+        android:layout_height="48dp">
 
         <view
             class="android.view.View"
@@ -32,7 +31,8 @@
             android:text="Reminder Text"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:background="@color/black"/>
+            android:background="?android:attr/activatedBackgroundIndicator"/>
+        <!--android:background="@color/black"-->
 
     </LinearLayout>
 

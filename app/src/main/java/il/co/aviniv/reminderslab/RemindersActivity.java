@@ -113,10 +113,15 @@ public class RemindersActivity extends AppCompatActivity {
                 mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
                 mListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
+                    private int totalSelected = 0;
+
+                    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                     @Override
                     // Here you can do something when items are selected/de-selected, such as update the title in the CAB
                     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                        Log.d("ANIV", "item #" + position + " : " + String.valueOf(mListView.isItemChecked(position)) + " , checked: " + String.valueOf(checked) + " , id: " + String.valueOf(id));
+                        if (checked) {totalSelected++;}
+                        else {totalSelected--;}
+                        mode.setTitle(String.valueOf(totalSelected) + " items selected");
                     }
 
                     @TargetApi(Build.VERSION_CODES.HONEYCOMB)   //added by the android studio
