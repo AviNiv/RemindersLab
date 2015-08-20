@@ -114,7 +114,7 @@ public class RemindersDbAdapter {
 
     //DELETE
     public void deleteReminderById(int nId) {
-        mDb.delete(TABLE_NAME, COL_ID + "?", new String[]{String.valueOf(nId)});
+        mDb.delete(TABLE_NAME, COL_ID + "=?", new String[]{String.valueOf(nId)});
     }
 
     public void deleteAllReminders() {

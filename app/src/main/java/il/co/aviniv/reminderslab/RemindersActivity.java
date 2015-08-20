@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -115,10 +114,14 @@ public class RemindersActivity extends AppCompatActivity {
                 mListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
                     @Override
-                    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) { }
+                    // Here you can do something when items are selected/de-selected, such as update the title in the CAB
+                    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                        Log.d("ANIV", "item #" + position + " : " + String.valueOf(mListView.isItemChecked(position)) + " , checked: " + String.valueOf(checked) + " , id: " + String.valueOf(id));
+                    }
 
                     @TargetApi(Build.VERSION_CODES.HONEYCOMB)   //added by the android studio
                     @Override
+                    // Respond to clicks on the actions in the CAB
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                         MenuInflater inflater = mode.getMenuInflater();
                         inflater.inflate(R.menu.cam_menu, menu);                //inflate a context menu in the action bar
@@ -126,30 +129,39 @@ public class RemindersActivity extends AppCompatActivity {
                     }
 
                     @Override
+                    // Here you can perform updates to the CAB due to an invalidate() request
                     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                         return false;
                     }
 
                     @TargetApi(Build.VERSION_CODES.HONEYCOMB)   //added by the android studio
                     @Override
-                    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                        //select or deselect each item in context menu
-                        switch(item.getItemId()) {
-                            case R.id.menu_item_delete_reminder:
-                                for (int nC = mCursorAdapter.getCount() - 1; nC >= 0; nC--) {
-                                    if (mListView.isItemChecked(nC)) {
-                                        mDbAdapter.deleteReminderById(getIdFromPosition(nC));
+                    public boolean onActionItemClicked(ActionMode mode, MenuItem item)  {
+                        Log.d("ANIV", String.valueOf(item.getItemId()));
+                        try {
+                            //select or deselect each item in context menu
+                            switch (item.getItemId()) {
+                                case R.id.menu_item_delete_reminder:
+                                    for (int nC = mCursorAdapter.getCount() - 1; nC >= 0; nC--) {
+                                        if (mListView.isItemChecked(nC)) {
+                                            mDbAdapter.deleteReminderById(getIdFromPosition(nC));
+                                        }
                                     }
-                                }
-                                mode.finish();  //end multi select mode
-                                mCursorAdapter.changeCursor(mDbAdapter.fetchAllReminders());
-                                return true;        // true = the action has been properly handled
+                                    mode.finish();  //end multi select mode
+                                    mCursorAdapter.changeCursor(mDbAdapter.fetchAllReminders());
+                                    return true;        // true = the action has been properly handled
+                            }
+                        }
+                        catch (Exception ex) {
+                            Log.e("ANIVE", ex.getMessage());
                         }
                         return false;
                     }
 
                     @Override
+                    // Here you can make any necessary updates to the activity when the CAB is removed. By default, selected items are deselected/unchecked.
                     public void onDestroyActionMode(ActionMode mode) { }
+
                 });
             }
         }
