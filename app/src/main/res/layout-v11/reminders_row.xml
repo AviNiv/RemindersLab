@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/reminders_row"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical"
+    android:background="@color/dark_grey">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="?android:attr/activatedBackgroundIndicator">
+
+        <view
+            class="android.view.View"
+            android:id="@+id/row_tab"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/green"/>
+
+        <TextView
+            android:id="@+id/row_text"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Reminder Text"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <view
+        class="android.view.View"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
+    <view
+        class="android.view.View"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray20"/>
 
 </LinearLayout>
