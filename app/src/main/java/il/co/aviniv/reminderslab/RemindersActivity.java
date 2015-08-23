@@ -94,6 +94,26 @@ public class RemindersActivity extends AppCompatActivity {
                     modeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (position == 0) {
+                                //edit reminder. 0 = the first item in the popup box.
+                                int nId = getIdFromPosition(masterListPosition);
+                                Reminder reminder = mDbAdapter.fetchReminderById(nId);
+                                fireCustomDialog(reminder);
+                            } else {
+                                //delete reminder. 1 = the second item in the popup box.
+                                mDbAdapter.deleteReminderById(getIdFromPosition(masterListPosition));
+                                mCursorAdapter.changeCursor(mDbAdapter.fetchAllReminders());
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+
+                    //this script if for static list, replaced by the above script
+                    /*------------------------------------------------------------------------------------------------//
+                    //create an onclick listener to the inner view (modeListView), to handle selected option action
+                    modeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             //edit reminder
                             if (position == 0) {
                                 Toast.makeText(RemindersActivity.this, "edit " + masterListPosition, Toast.LENGTH_SHORT).show();
@@ -105,6 +125,7 @@ public class RemindersActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
+                    //------------------------------------------------------------------------------------------------*/
                 };
 
                 //this script if for testing the position
@@ -135,6 +156,7 @@ public class RemindersActivity extends AppCompatActivity {
                     @Override
                     // Respond to clicks on the actions in the CAB
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                        totalSelected = 0;
                         MenuInflater inflater = mode.getMenuInflater();
                         inflater.inflate(R.menu.cam_menu, menu);                //inflate a context menu in the action bar
                         return true;                                            //true = enter multi select action mode
@@ -260,7 +282,8 @@ public class RemindersActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_new:
                 //create new reminder
-                Log.d(getLocalClassName(), "create new reminder");
+                //Log.d(getLocalClassName(), "create new reminder");    >>replaced
+                fireCustomDialog(null);
                 return true;
             case R.id.action_exit:
                 finish();

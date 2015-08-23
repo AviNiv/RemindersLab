@@ -85,7 +85,7 @@ public class RemindersDbAdapter {
     //READ
     public Reminder fetchReminderById(int id) {
         Cursor cursor = mDb.query(TABLE_NAME
-                , new String[]{COL_ID, COL_CONTENT,  COL_IMPORTANT}, COL_ID + "?"
+                , new String[]{COL_ID, COL_CONTENT,  COL_IMPORTANT}, COL_ID + "=?"
                 , new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -109,7 +109,7 @@ public class RemindersDbAdapter {
         ContentValues values = new ContentValues();
         values.put(COL_CONTENT, reminder.getContent());
         values.put(COL_IMPORTANT, reminder.getImportant());
-        mDb.update(TABLE_NAME, values, COL_ID + "?", new String[]{String.valueOf(reminder.getId())});
+        mDb.update(TABLE_NAME, values, COL_ID + "=?", new String[]{String.valueOf(reminder.getId())});
     }
 
     //DELETE
